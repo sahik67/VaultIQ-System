@@ -64,6 +64,7 @@ The project is built on a **Centralized Command & Control (C2)** architecture.
 ---
 
 ## 📚 Technical Documentation
+*   **[Technical Deep-Dive & API Guide](./TECHNICAL_GUIDE.md)**: Detailed explanation of core engine logic and C2 protocols.
 *   [Feature Comparison Matrix](./ClevGuard_Feature_Comparison.md)
 *   [Executive Management Dashboard Design](./stitch-design-system/executive_management_dashboard/DESIGN.md)
 *   [Database Schema Details](./backend/policies/row-level-security.sql)
