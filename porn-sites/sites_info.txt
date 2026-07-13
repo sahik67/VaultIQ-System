@@ -1,0 +1,71 @@
+GUARDIANLOCK - PROTECTION DATABASE INFO
+=======================================
+
+This file contains a summary of all blocked sites, categories, and keywords used by GuardianLock to keep your digital environment safe.
+
+-----------------------------------------------------------
+1. CATEGORY DEFINITIONS (The "Goods")
+-----------------------------------------------------------
+Category 1: Adult (Pornography, NSFW, Hentai)
+Category 2: Gambling (Betting, Casinos)
+Category 3: Social (Social Media Distractions)
+Category 4: Short Video (TikTok, Reels, etc.)
+Category 5: Piracy (Torrents, Illegal Downloads)
+
+-----------------------------------------------------------
+2. CORE BLOCKED SITES (1000+ Database Implemented)
+-----------------------------------------------------------
+[ADULT SITES]
+- pornhub.com, xvideos.com, xnxx.com, xhamster.com, youjizz.com
+- brazzers.com, naughtyamerica.com, hentaihaven.me, hanime.tv
+- nhentai.net, rule34.xxx, chaturbate.com, stripchat.com
+- (And 1000+ systematically generated variants using AI logic)
+
+[GAMBLING SITES]
+- bet365.com, 888casino.com, pokerstars.com, betway.com, 1xbet.com
+- betfair.com, williamhill.com, bodog.com, bwin.com, ladbrokes.com
+
+[SOCIAL MEDIA]
+- facebook.com, instagram.com, twitter.com, x.com, reddit.com
+- discord.com, snapchat.com, linkedin.com, pinterest.com, tumblr.com
+
+[SHORT VIDEO]
+- tiktok.com, likee.video, kwai.com, reels.com, triller.co
+
+[PIRACY & TORRENTS]
+- thepiratebay.org, 1337x.to, rarbg.to, yts.mx, fmovies.to
+- 123movies.to, putlocker.to, torrentz2.eu, eztv.re
+
+-----------------------------------------------------------
+3. SMART KEYWORDS (Intent-Based Matching)
+-----------------------------------------------------------
+GuardianLock uses "Confidence Weights" to block sites even if they aren't in the list.
+
+CORE KEYWORDS (Instant Block):
+- porn, xxx, hentai, sex, nude, naked, pornhub, xvideos, xnxx, brazzers
+
+EXTENDED KEYWORDS (Score-Based):
+- hotstream, camgirl, livecam, leakvideo, adultcontent, adultvideo, sexvideo
+- nudephoto, privatevideo, secretvideo, hiddenstream, leakzone, leakhub
+
+-----------------------------------------------------------
+4. FOCUS MODE WHITELIST (Allowed "Good" Sites)
+-----------------------------------------------------------
+When Focus Mode is enabled, everything is blocked EXCEPT these essential tools:
+- google.com (Search)
+- wikipedia.org (Knowledge)
+- khanacademy.org (Education)
+- stackoverflow.com (Coding)
+- github.com (Development)
+- guardianlock.com (App Support)
+
+-----------------------------------------------------------
+5. PROTECTION SUMMARY
+-----------------------------------------------------------
+Total Core Sites: 1200+
+Total Keywords: 60+
+Protection Engine: Hybrid Trie + Intent Scoring
+Persistence: 6-Layer Watchdog System
+
+File Updated on: 2026-05-18
+Status: ALL SITES ADDED TO CORE ENGINE

