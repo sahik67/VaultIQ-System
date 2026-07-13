@@ -1,0 +1,196 @@
+# Device Monitor Android App - UI/UX Design Prompt
+
+## Project Overview
+Create a clean, professional, and native-feeling UI/UX design for the Device Monitor Android application.
+
+---
+
+## 1. Design System Specifications (Android App)
+
+### 1.1 Color Palette
+Define a cohesive, accessible color palette that adheres strictly to WCAG 2.1 AA standards.
+
+#### Primary Palette
+- **Primary Blue**: `#2563EB` (Base)
+- **Primary Blue (Dark)**: `#1D4ED8` (Active/Emphasis)
+- **Primary Blue (Light)**: `#DBEAFE` (Background/Accent)
+- **Secondary Green**: `#10B981` (Success/Positive)
+- **Secondary Green (Light)**: `#DCFCE7` (Success Background)
+- **Warning Orange**: `#F59E0B` (Alerts/Caution)
+- **Warning Orange (Light)**: `#FEF3C7` (Alert Background)
+- **Error Red**: `#EF4444` (Critical/Error)
+- **Error Red (Light)**: `#FEE2E2` (Error Background)
+
+#### Neutral Palette
+- **Black (Darkest)**: `#0F172A` (Primary Text/Dark Backgrounds)
+- **Dark Gray**: `#1E293B` (Secondary Text/Sidebar Background)
+- **Medium Gray**: `#475569` (Tertiary Text/Subtle)
+- **Light Gray**: `#94A3B8` (Disabled/Placeholder)
+- **Pale Gray**: `#E2E8F0` (Borders/Dividers)
+- **Background White**: `#F8FAFC` (Page Background)
+- **Pure White**: `#FFFFFF` (Card/Component Background)
+
+#### Accessibility Checks
+- All text-to-background color pairs must maintain a minimum contrast ratio of 4.5:1 for normal text and 3:1 for large text.
+- Use semantic color names consistently (e.g., `color-success` for positive feedback, `color-error` for critical errors).
+
+### 1.2 Typography Hierarchy
+Establish a native-feeling type system for Android.
+
+#### Font Family
+- **Primary Sans-Serif**: `Roboto`
+
+#### Type Scale
+- **Display Large**: 32px / 40px (Bold)
+- **Display Medium**: 28px / 36px (Bold)
+- **Heading Large**: 24px / 32px (Semibold)
+- **Heading Medium**: 20px / 28px (Semibold)
+- **Heading Small**: 18px / 26px (Medium)
+- **Body Large**: 16px / 24px (Regular)
+- **Body Medium**: 14px / 20px (Regular)
+- **Body Small**: 12px / 18px (Regular)
+- **Label Large**: 14px / 20px (Medium, Uppercase, 0.5px Letter Spacing)
+- **Label Small**: 12px / 16px (Medium, Uppercase, 0.5px Letter Spacing)
+
+#### Line Height & Spacing
+- Base line height: 1.5x for body text
+- Line height for headings: 1.2x
+- Paragraph spacing: 16px
+- Use 4px grid system for all spacing (4, 8, 12, 16, 20, 24, 32, 40, 48)
+
+### 1.3 Component Library (Android App)
+Unified UI components with consistent styling and Material Design patterns.
+
+#### Buttons
+- **Primary Button**:
+  - Background: `#2563EB`
+  - Text: `#FFFFFF`
+  - Border Radius: 8px
+  - Padding: 12px 24px
+  - Pressed: `#1D4ED8`, 95% scale
+  - Disabled: `#94A3B8` background
+
+- **Secondary Button**:
+  - Background: `#FFFFFF`
+  - Text: `#2563EB`
+  - Border: 1px `#2563EB`
+  - Same padding and radius as primary
+  - Pressed: `#DBEAFE`
+
+- **Icon Button**:
+  - Circular (40x40px)
+  - Transparent background
+  - Ripple effect on press
+
+#### Cards
+- White background
+- Border radius: 12px
+- Elevation: 4dp
+- Padding: 24px
+- Consistent spacing between elements inside
+
+#### Forms
+- Input field height: 48px
+- Border: 1px `#E2E8F0`
+- Border radius: 8px
+- Focus: Outline 2px `#2563EB`, background `#F8FAFC`
+- Label: Floating label (Material Design pattern)
+- Helper text: 12px, `#475569`
+
+#### Navigation
+- **Bottom Navigation**:
+  - Height: 64px
+  - 4-5 items max
+  - Active item: Blue icon + label
+
+#### Modals/Bottom Sheets
+- Bottom sheets preferred for mobile
+- Rounded corners (24px top)
+- Semi-transparent scrim
+- Actions aligned right at bottom
+
+---
+
+## 2. User Experience Requirements (Android App)
+
+### 2.1 User Flows
+Define intuitive, friction-minimized user flows following Android conventions.
+
+#### Key Flows
+1. **Initial Setup**: Permissions request → Enable accessibility → Enter stealth mode
+2. **Data Sync**: Auto-sync in background → Manual sync option
+3. **Notification Handling**: Accessibility service → Messenger messages → Send to backend
+
+### 2.2 Responsive Design
+Ensure design works on all Android screen sizes.
+
+#### Screen Sizes
+- Small: 360px – 480px
+- Normal: 480px – 720px
+- Large: 720px – 1024px
+- XLarge: 1024px+
+
+### 2.3 Micro-Interactions & Feedback
+Add subtle, Material Design-aligned interactions.
+
+- **Loading States**: Skeleton loaders, progress bars, circular progress indicators
+- **Success Feedback**: Green check icon + Snackbar (3-second auto-dismiss)
+- **Error Feedback**: Red alert icon + persistent Snackbar with "Retry" action
+- **Button Press**: Ripple effect + 95% scale
+- **Transitions**: Material shared axis transitions between screens
+
+---
+
+## 3. Visual Design Standards (Android App)
+
+### 3.1 Minimalist Design Principles
+- **White Space**: Generous padding and margins to reduce cognitive load
+- **Hierarchy**: Clear visual order using size, color, and spacing
+- **Imagery**: Use only relevant imagery, no decorative elements
+- **Icons**: Consistent Material Icons (24x24px)
+
+### 3.2 Accessibility Requirements
+- **Screen Reader Support**: All interactive elements have content descriptions
+- **Keyboard Navigation**: Full D-pad and keyboard accessibility
+- **Focus States**: Material Design focus rings
+- **Touch Targets**: Minimum 48x48px for all interactive elements
+- **Text Resizing**: Support for system font scaling up to 200%
+
+### 3.3 Performance Standards
+- Animations ≤ 300ms duration
+- App cold start time ≤ 2s
+- UI interactions ≤ 100ms response time
+
+---
+
+## 4. Deliverable Requirements (Android App)
+
+### 4.1 Low-Fidelity Wireframes
+- Cover all key screens: Setup Screen, Home Screen, Permissions Flow
+- Black and white, no colors/images
+- Focus on layout, user flow, and information hierarchy
+
+### 4.2 High-Fidelity Mockups
+- Full-color mockups following Material Design and the defined design system
+- Show all screens across small, normal, large, and xlarge screen sizes
+- Include empty states, loading states, and error states
+
+### 4.3 Interactive Prototypes
+- Figma/Adobe XD prototype with hotspots
+- Demonstrate key user journeys: Initial setup, permissions flow, data sync
+
+### 4.4 Developer Handoff
+- Organized file with screens clearly labeled
+- Annotations with exact dp values, color codes, and font details
+- Export all icons in SVG/PNG 2x/3x/4x
+- Interaction specifications (timing, easing functions, Material transitions)
+- Accessibility notes for all components
+
+---
+
+## 5. Success Criteria (Android App)
+1. **Usability**: System Usability Scale (SUS) score ≥ 80 in user testing
+2. **Accessibility**: 100% pass rate on WCAG 2.1 AA audit
+3. **Task Completion**: ≥90% of users successfully complete core tasks
+4. **Performance**: All UI interactions meet Material Design timing standards
+

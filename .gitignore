@@ -1,0 +1,29 @@
+# Gradle files
+.gradle/
+build/
+android-app/build/
+android-app/app/build/
+gradle-8.5-bin.zip
+
+# IDE files
+.idea/
+*.iml
+*.iws
+.vscode/
+
+# Local configuration
+local.properties
+.android/
+
+# Large binary files and dumps
+*.hprof
+*.apk
+*.jks
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

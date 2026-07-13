@@ -1,0 +1,204 @@
+# Device Monitor Dashboard - UI/UX Design Prompt (Website)
+
+## Project Overview
+Create a clean, professional, and unified UI/UX design for the Device Monitor web dashboard.
+
+---
+
+## 1. Design System Specifications (Website)
+
+### 1.1 Color Palette
+Define a cohesive, accessible color palette that adheres strictly to WCAG 2.1 AA standards.
+
+#### Primary Palette
+- **Primary Blue**: `#2563EB` (Base)
+- **Primary Blue (Dark)**: `#1D4ED8` (Active/Emphasis)
+- **Primary Blue (Light)**: `#DBEAFE` (Background/Accent)
+- **Secondary Green**: `#10B981` (Success/Positive)
+- **Secondary Green (Light)**: `#DCFCE7` (Success Background)
+- **Warning Orange**: `#F59E0B` (Alerts/Caution)
+- **Warning Orange (Light)**: `#FEF3C7` (Alert Background)
+- **Error Red**: `#EF4444` (Critical/Error)
+- **Error Red (Light)**: `#FEE2E2` (Error Background)
+
+#### Neutral Palette
+- **Black (Darkest)**: `#0F172A` (Primary Text/Dark Backgrounds)
+- **Dark Gray**: `#1E293B` (Secondary Text/Sidebar Background)
+- **Medium Gray**: `#475569` (Tertiary Text/Subtle)
+- **Light Gray**: `#94A3B8` (Disabled/Placeholder)
+- **Pale Gray**: `#E2E8F0` (Borders/Dividers)
+- **Background White**: `#F8FAFC` (Page Background)
+- **Pure White**: `#FFFFFF` (Card/Component Background)
+
+#### Accessibility Checks
+- All text-to-background color pairs must maintain a minimum contrast ratio of 4.5:1 for normal text and 3:1 for large text.
+- Use semantic color names consistently (e.g., `color-success` for positive feedback, `color-error` for critical errors).
+
+### 1.2 Typography Hierarchy
+Establish a unified type system for web.
+
+#### Font Family
+- **Primary Sans-Serif**: `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`
+
+#### Type Scale
+- **Display Large**: 40px / 48px (Bold)
+- **Display Medium**: 36px / 44px (Bold)
+- **Heading Large**: 32px / 40px (Semibold)
+- **Heading Medium**: 28px / 36px (Semibold)
+- **Heading Small**: 24px / 32px (Medium)
+- **Body Large**: 18px / 28px (Regular)
+- **Body Medium**: 16px / 24px (Regular)
+- **Body Small**: 14px / 20px (Regular)
+- **Label Large**: 16px / 22px (Medium, Uppercase, 0.5px Letter Spacing)
+- **Label Small**: 14px / 18px (Medium, Uppercase, 0.5px Letter Spacing)
+
+#### Line Height & Spacing
+- Base line height: 1.5x for body text
+- Line height for headings: 1.2x
+- Paragraph spacing: 24px
+- Use 4px grid system for all spacing (4, 8, 12, 16, 20, 24, 32, 40, 48)
+
+### 1.3 Component Library (Website)
+Unified UI components with consistent styling and interactions.
+
+#### Buttons
+- **Primary Button**:
+  - Background: `#2563EB`
+  - Text: `#FFFFFF`
+  - Border Radius: 10px
+  - Padding: 12px 24px
+  - Hover: `#1D4ED8`
+  - Active: Scale down 95%
+  - Disabled: `#94A3B8` background
+
+- **Secondary Button**:
+  - Background: `#FFFFFF`
+  - Text: `#2563EB`
+  - Border: 1px `#2563EB`
+  - Same padding and radius as primary
+  - Hover: `#DBEAFE`
+
+- **Icon Button**:
+  - Circular (48x48px)
+  - Transparent background
+  - Hover: `#F1F5F9`
+
+#### Cards
+- White background
+- Border radius: 16px
+- Box shadow: `0 4px 20px rgba(0, 0, 0, 0.06)`
+- Padding: 24px
+- Consistent spacing between elements inside
+
+#### Forms
+- Input field height: 48px
+- Border: 1px `#E2E8F0`
+- Border radius: 8px
+- Focus: Outline 2px `#2563EB`, background `#F8FAFC`
+- Label: Positioned above input, 12px spacing
+- Helper text: 12px, `#475569`
+
+#### Navigation
+- **Sidebar**:
+  - Width: 260px (desktop), collapsible to 80px
+  - Background: `#0F172A`
+  - Active nav item: `#2563EB` background, white text
+  - Hover: Transparent white overlay
+
+#### Modals
+- Centered on screen
+- Background: Semi-transparent black `rgba(0, 0, 0, 0.5)`
+- Modal card padding: 32px
+- Max width: 600px
+- Actions aligned right at bottom
+
+---
+
+## 2. User Experience Requirements (Website)
+
+### 2.1 User Flows
+Define intuitive, friction-minimized user flows.
+
+#### Key Flows
+1. **Login/Setup**: → Device selection → Dashboard overview
+2. **View Data**: Navigate via sidebar → Filter/search → View details
+3. **Send Remote Command**: Dashboard → Click command button → Confirm → View status
+4. **Manage Geofences**: Location page → Add/delete geofence → View on map
+
+### 2.2 Responsive Design
+Ensure responsive behavior across all viewports.
+
+#### Breakpoints
+- Mobile: 360px – 767px
+- Tablet: 768px – 1023px
+- Desktop: 1024px – 1919px
+- Large Desktop: 1920px+
+
+#### Layout Behavior
+- **Mobile**: Stacked layouts, bottom navigation, collapsed cards
+- **Tablet**: Sidebar optional, grid layouts with 2 columns
+- **Desktop/Large Desktop**: Full sidebar, multi-column grids, expanded views
+
+### 2.3 Micro-Interactions & Feedback
+Add subtle interactions to enhance usability.
+
+- **Loading States**: Skeleton loaders for cards/tables, spinner for buttons
+- **Success Feedback**: Green check icon + toast (3-second auto-dismiss)
+- **Error Feedback**: Red alert icon + persistent toast with "Retry" option
+- **Button Press**: 95% scale animation, 150ms duration
+- **Modal Open/Close**: Fade + slide up (250ms duration)
+
+---
+
+## 3. Visual Design Standards (Website)
+
+### 3.1 Minimalist Design Principles
+- **White Space**: Generous padding and margins to reduce cognitive load
+- **Hierarchy**: Clear visual order using size, color, and spacing
+- **Imagery**: Use only relevant imagery, no decorative elements
+- **Icons**: Consistent icon style (24x24px) from Material Icons
+
+### 3.2 Accessibility Requirements
+- **Screen Reader Support**: All interactive elements have proper ARIA labels
+- **Keyboard Navigation**: Full keyboard accessibility with visible focus states
+- **Focus States**: Outline 2px `#2563EB`, offset 2px
+- **Text Resizing**: Support for 200% text scaling without layout breaking
+
+### 3.3 Performance Standards
+- Animations ≤ 300ms duration
+- Images optimized to ≤ 200KB
+- Web dashboard load time ≤ 2s on 4G
+
+---
+
+## 4. Deliverable Requirements (Website)
+
+### 4.1 Low-Fidelity Wireframes
+- Cover all key pages: Dashboard, Map, Calls, SMS, Messengers, Web History, Apps, Photos, Screenshots, Keystrokes, Clipboard, Device Info, Network, SIM Changes
+- Black and white, no colors/images
+- Focus on layout, user flow, and information hierarchy
+
+### 4.2 High-Fidelity Mockups
+- Full-color mockups following the design system
+- Show all pages across mobile, tablet, and desktop breakpoints
+- Include empty states, loading states, and error states
+
+### 4.3 Interactive Prototypes
+- Figma/Adobe XD prototype with hotspots
+- Demonstrate key user journeys: Sending remote command, filtering/searching data, setting up geofence, navigating between pages
+
+### 4.4 Developer Handoff
+- Organized file with pages/sections clearly labeled
+- Annotations with exact spacing (px), color codes, and font details
+- Export all icons and images in SVG/PNG 2x/3x
+- Interaction specifications (timing, easing functions)
+- Accessibility notes for all components
+
+---
+
+## 5. Success Criteria (Website)
+1. **Usability**: System Usability Scale (SUS) score ≥ 80 in user testing
+2. **Accessibility**: 100% pass rate on WCAG 2.1 AA audit
+3. **Task Completion**: ≥90% of users successfully complete core tasks
+4. **Performance**: All UI interactions ≤ 100ms response time
+
