@@ -77,3 +77,6 @@ VaultIQ is developed for **authorized parental monitoring and enterprise device 
 ---
 **VaultIQ System - Build v1.0 (2026)**
 "Total Visibility. Absolute Stealth."
+
+## 🤝 How to Contribute
+Contributions are welcome! Please follow the [Technical Guide](./TECHNICAL_GUIDE.md) and submit a Pull Request for any improvements.
